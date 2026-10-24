@@ -44,6 +44,10 @@ jobs:
           mkdir -p _site
           rsync -a --exclude '.git' --exclude '.github' --exclude '_site' \
                 --exclude 'analysis' --exclude 'scripts' --exclude 'docs' --exclude '__pycache__' ./ _site/
+          # Gắn mã phiên bản để trình duyệt không dùng bản cũ trong bộ nhớ đệm
+          BUILD="${GITHUB_SHA::7}"
+          sed -i "s/__BUILD__/${BUILD}/g" _site/index.html
+          sed -i "s#assets/js/app.js\"#assets/js/app.js?v=${BUILD}\"#; s#assets/css/main.css\"#assets/css/main.css?v=${BUILD}\"#" _site/index.html
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site

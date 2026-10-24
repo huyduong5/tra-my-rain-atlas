@@ -2,10 +2,11 @@
 import { addDays, dayDiff } from "./format.js";
 
 const cache = new Map();
+const BUILD = document.querySelector('meta[name="build"]')?.content || "dev";
 
 export function getJSON(name) {
   if (!cache.has(name)) {
-    const p = fetch(`data/${name}`).then((r) => {
+    const p = fetch(`data/${name}?v=${BUILD}`).then((r) => {
       if (!r.ok) throw new Error(`Không tải được data/${name} (HTTP ${r.status})`);
       return r.json();
     });

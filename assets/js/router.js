@@ -27,6 +27,8 @@ export function go(path, params = {}) {
 }
 
 let token = 0;
+// Mã phiên bản do CI điền vào index.html, giúp trình duyệt tải trang mới sau mỗi lần triển khai
+const BUILD = document.querySelector('meta[name="build"]')?.content || "dev";
 
 export async function render() {
   const main = document.getElementById("main");
@@ -54,7 +56,7 @@ export async function render() {
   main.replaceChildren(host);
   window.scrollTo({ top: 0 });
   try {
-    const mod = await import(`./pages/${route.module}.js`);
+    const mod = await import(`./pages/${route.module}.js?v=${BUILD}`);
     if (my !== token) return;
     await mod.render(host, params, () => my === token);
   } catch (err) {
