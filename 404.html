@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Không tìm thấy trang — Trà My Rain Atlas</title>
+  <script>
+    // Chuyển đường dẫn lạ về trang chủ của site (giữ được thư mục con trên GitHub Pages)
+    (function () {
+      var parts = location.pathname.split("/").filter(Boolean);
+      var base = location.hostname.endsWith("github.io") && parts.length ? "/" + parts[0] + "/" : "/";
+      location.replace(base + "#/");
+    })();
+  </script>
+  <style>body{font-family:system-ui,sans-serif;max-width:40rem;margin:4rem auto;padding:0 1rem;color:#0b1c24}a{color:#1b4b63}</style>
+</head>
+<body>
+  <h1>Không tìm thấy trang</h1>
+  <p>Đang chuyển về <a href="./">Trà My Rain Atlas</a>…</p>
+</body>
+</html>

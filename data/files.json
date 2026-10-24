@@ -1,0 +1,81 @@
+{
+ "files": [
+  {
+   "path": "data/raw/Hourly_rain_Tra_My_2008_2017.csv",
+   "title": "Số liệu gốc mưa giờ",
+   "desc": "Cột Ngay, Gio (1–24), Luong mua (mm), cờ trượt lở; 87 672 dòng",
+   "size": 1708115,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/mua_ngay.csv",
+   "title": "Mưa ngày",
+   "desc": "Tổng mưa ngày, số giờ có số liệu, cờ ngày hợp lệ, cờ trượt lở",
+   "size": 96375,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/mua_thang.csv",
+   "title": "Mưa tháng",
+   "desc": "Tổng mưa tháng, số ngày hợp lệ, cờ tháng hợp lệ, số ngày mưa",
+   "size": 3923,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/mua_nam.csv",
+   "title": "Mưa năm và mùa",
+   "desc": "Mưa năm, mùa mưa IX–XII, mùa khô I–VIII, số ngày mưa, cờ hợp lệ",
+   "size": 842,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/chi_so_cuc_tri.csv",
+   "title": "Chỉ số cực trị",
+   "desc": "Rx1day, Rx5day, Rx1hour theo năm, ngày xảy ra, cờ trượt lở",
+   "size": 1032,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/chu_ky_lap_lai.csv",
+   "title": "Mưa theo chu kỳ lặp lại",
+   "desc": "T = 2–500 năm cho 5 phân bố, POT và khoảng tin cậy 95%",
+   "size": 1111,
+   "type": "CSV"
+  },
+  {
+   "path": "data/csv/truot_lo.csv",
+   "title": "Ngày có trượt lở",
+   "desc": "Mưa ngày, tích lũy 3 và 5 ngày, giờ mưa lớn nhất",
+   "size": 1594,
+   "type": "CSV"
+  },
+  {
+   "path": "data/returns.json",
+   "title": "Kết quả phân tích tần suất (JSON)",
+   "desc": "Tham số, chỉ tiêu phù hợp và lưới mức mưa theo T",
+   "size": 16921,
+   "type": "JSON"
+  },
+  {
+   "path": "data/thresholds.json",
+   "title": "Ngưỡng R95p/R99p (JSON)",
+   "desc": "Ngưỡng, số lần vượt theo năm/tháng, phân vị 1–99",
+   "size": 3956,
+   "type": "JSON"
+  },
+  {
+   "path": "data/summary.json",
+   "title": "Thống kê mô tả (JSON)",
+   "desc": "Thống kê mưa giờ, ngày theo mùa, chu trình ngày",
+   "size": 4695,
+   "type": "JSON"
+  },
+  {
+   "path": "data/hourly/",
+   "title": "Mưa giờ theo năm (JSON)",
+   "type": "JSON",
+   "desc": "10 file hourly/2008.json … 2017.json, mỗi file là mảng lượng mưa từng giờ",
+   "size": 356114
+  }
+ ]
+}
