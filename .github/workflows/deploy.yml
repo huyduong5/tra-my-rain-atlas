@@ -48,6 +48,8 @@ jobs:
           BUILD="${GITHUB_SHA::7}"
           sed -i "s/__BUILD__/${BUILD}/g" _site/index.html
           sed -i "s#assets/js/app.js\"#assets/js/app.js?v=${BUILD}\"#; s#assets/css/main.css\"#assets/css/main.css?v=${BUILD}\"#" _site/index.html
+          find _site/assets/js -name '*.js' -exec sed -i -E "s#(from \"\.{1,2}/[^\"?]+\.js)\"#\1?v=${BUILD}\"#g" {} +
+          grep -rhoE 'from "[^"]+"' _site/assets/js | sort -u
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
