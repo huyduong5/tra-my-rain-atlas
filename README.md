@@ -45,7 +45,8 @@ Chuỗi cực đại năm chỉ có 10 năm nên các mức 50–100 năm là ng
 ## Công nghệ
 
 - **Không cần máy chủ, không có bước build:** HTML, CSS, JavaScript ES modules
-- **Biểu đồ:** [Apache ECharts](https://echarts.apache.org/) 5.5.1 · **Bản đồ:** [Leaflet](https://leafletjs.com/) 1.9.4 + OpenStreetMap (thư viện lưu sẵn trong `vendor/`)
+- **Biểu đồ:** [Apache ECharts](https://echarts.apache.org/) 5.5.1 · **Bản đồ:** [Leaflet](https://leafletjs.com/) 1.9.4 (thư viện lưu sẵn trong `vendor/`), ảnh nền Esri (mặc định), OpenTopoMap, OpenStreetMap
+- **Cập nhật không bị cache cũ:** mỗi lần triển khai, CI gắn mã commit vào đường dẫn các file JS/CSS/JSON
 - **Dữ liệu:** tính bằng Python 3.12 (pandas, numpy, scipy), xuất JSON gọn (khoảng 0,5 MB)
 - **Triển khai:** GitHub Actions kiểm tra dữ liệu (`scripts/validate_data.py`) rồi đưa lên GitHub Pages sau mỗi lần push vào nhánh `main`
 
