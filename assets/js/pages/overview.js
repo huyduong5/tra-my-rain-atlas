@@ -71,12 +71,21 @@ export async function render(host) {
     notice("Mùa mưa IX–XII chiếm khoảng hai phần ba lượng mưa năm; tháng XI mưa nhiều nhất. Các ngày mưa lớn nhất mỗi năm đều rơi vào mùa này và phần lớn trùng với ngày xảy ra trượt lở."),
     h("div", { class: "grid grid-2" }, evCard.root, lsCard.root));
 
-  // Bản đồ Leaflet (ảnh nền OpenStreetMap)
+  // Bản đồ Leaflet: CARTO làm nền mặc định (tile.openstreetmap.org không truy cập được từ một số mạng)
   if (window.L) {
-    const map = window.L.map(mapEl, { scrollWheelZoom: false }).setView([meta.lat, meta.lon], 9);
-    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
+    const L = window.L;
+    const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    const layers = {
+      "Bản đồ nền (CARTO)": L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19, subdomains: "abcd", attribution: `${osmAttr} &copy; <a href="https://carto.com/attributions">CARTO</a>`,
+      }),
+      "Địa hình (Esri)": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {
+        maxZoom: 18, attribution: "Tiles &copy; Esri",
+      }),
+      "OpenStreetMap": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: osmAttr }),
+    };
+    const map = L.map(mapEl, { scrollWheelZoom: false, layers: [layers["Bản đồ nền (CARTO)"]] }).setView([meta.lat, meta.lon], 9);
+    L.control.layers(layers, null, { collapsed: true }).addTo(map);
     window.L.marker([meta.lat, meta.lon]).addTo(map)
       .bindPopup(`<strong>${meta.station}</strong><br>Lượng mưa năm TB: ${fmt(tA.mean, 0)} mm<br><a href="#/tra-cuu">Tra cứu số liệu</a>`).openPopup();
   }
