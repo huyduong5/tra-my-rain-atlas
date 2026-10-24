@@ -15,5 +15,5 @@ export const ROUTES = [
 export const SITE = {
   name: "Trà My Rain Atlas",
   station: "Trạm Trà My",
-  repo: "https://github.com/OWNER/tra-my-rain-atlas",
+  repo: "https://github.com/huyduong5/tra-my-rain-atlas",
 };

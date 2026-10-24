@@ -2,7 +2,7 @@
 
 Website tra cứu và phân tích mưa giờ **trạm Trà My (Quảng Nam)**, giai đoạn **01/01/2008 – 31/12/2017**.
 
-**Xem website:** https://OWNER.github.io/tra-my-rain-atlas/
+**Xem website:** https://huyduong5.github.io/tra-my-rain-atlas/
 
 ![Trang tổng quan](docs/screenshots/tong-quan.jpg)
 
@@ -10,15 +10,15 @@ Website tra cứu và phân tích mưa giờ **trạm Trà My (Quảng Nam)**, g
 
 | Trang | Nội dung |
 |---|---|
-| [Tổng quan](https://OWNER.github.io/tra-my-rain-atlas/#/) | Số liệu chính, bản đồ trạm, đợt mưa lớn nhất 03–07/11/2017, mưa và trượt lở |
-| [Tra cứu](https://OWNER.github.io/tra-my-rain-atlas/#/tra-cuu?ngay=2017-11-05) | Chọn một ngày bất kỳ: mưa từng giờ, lịch nhiệt 10 năm, chuỗi mưa ngày, tải CSV |
-| [Thống kê (Câu 1)](https://OWNER.github.io/tra-my-rain-atlas/#/thong-ke) | Thống kê mưa giờ, ngày, tháng, năm, mùa; lọc theo khoảng năm |
-| [Cực trị (Câu 2)](https://OWNER.github.io/tra-my-rain-atlas/#/cuc-tri) | Rx1day, Rx5day, Rx1hour từng năm, biểu đồ từng đợt mưa |
-| [Ngưỡng R95p/R99p (Câu 3)](https://OWNER.github.io/tra-my-rain-atlas/#/nguong) | Ngưỡng mưa giờ, mưa ngày rất lớn và cực kỳ lớn; công cụ tra phân vị |
-| [Chu kỳ lặp (Câu 4)](https://OWNER.github.io/tra-my-rain-atlas/#/chu-ky) | Mưa theo chu kỳ 2–500 năm, khoảng tin cậy 95%, 5 phân bố + POT; quy đổi T và mm |
-| [Trượt lở](https://OWNER.github.io/tra-my-rain-atlas/#/truot-lo) | 28 ngày trượt lở so với mưa ngày, mưa tích lũy 5 ngày và ngưỡng R95p/R99p |
-| [Tải dữ liệu](https://OWNER.github.io/tra-my-rain-atlas/#/tai-du-lieu) | CSV/JSON mưa giờ, ngày, tháng, năm, chỉ số và kết quả phân tích |
-| [Phương pháp](https://OWNER.github.io/tra-my-rain-atlas/#/phuong-phap) | Quy tắc kiểm tra số liệu, định nghĩa chỉ số, công thức, tài liệu tham khảo |
+| [Tổng quan](https://huyduong5.github.io/tra-my-rain-atlas/#/) | Số liệu chính, bản đồ trạm, đợt mưa lớn nhất 03–07/11/2017, mưa và trượt lở |
+| [Tra cứu](https://huyduong5.github.io/tra-my-rain-atlas/#/tra-cuu?ngay=2017-11-05) | Chọn một ngày bất kỳ: mưa từng giờ, lịch nhiệt 10 năm, chuỗi mưa ngày, tải CSV |
+| [Thống kê (Câu 1)](https://huyduong5.github.io/tra-my-rain-atlas/#/thong-ke) | Thống kê mưa giờ, ngày, tháng, năm, mùa; lọc theo khoảng năm |
+| [Cực trị (Câu 2)](https://huyduong5.github.io/tra-my-rain-atlas/#/cuc-tri) | Rx1day, Rx5day, Rx1hour từng năm, biểu đồ từng đợt mưa |
+| [Ngưỡng R95p/R99p (Câu 3)](https://huyduong5.github.io/tra-my-rain-atlas/#/nguong) | Ngưỡng mưa giờ, mưa ngày rất lớn và cực kỳ lớn; công cụ tra phân vị |
+| [Chu kỳ lặp (Câu 4)](https://huyduong5.github.io/tra-my-rain-atlas/#/chu-ky) | Mưa theo chu kỳ 2–500 năm, khoảng tin cậy 95%, 5 phân bố + POT; quy đổi T và mm |
+| [Trượt lở](https://huyduong5.github.io/tra-my-rain-atlas/#/truot-lo) | 28 ngày trượt lở so với mưa ngày, mưa tích lũy 5 ngày và ngưỡng R95p/R99p |
+| [Tải dữ liệu](https://huyduong5.github.io/tra-my-rain-atlas/#/tai-du-lieu) | CSV/JSON mưa giờ, ngày, tháng, năm, chỉ số và kết quả phân tích |
+| [Phương pháp](https://huyduong5.github.io/tra-my-rain-atlas/#/phuong-phap) | Quy tắc kiểm tra số liệu, định nghĩa chỉ số, công thức, tài liệu tham khảo |
 
 Mọi trang đều có đường link chia sẻ được (ví dụ link trên trỏ thẳng tới ngày 05/11/2017), bảng sắp xếp được, nút tải CSV và nút lưu ảnh biểu đồ. Giao diện dùng được trên điện thoại.
 
@@ -87,7 +87,7 @@ Sau khi push, GitHub Actions tự triển khai; website cập nhật sau 1–2 p
 2. Trong repo: **Settings → Pages → Custom domain**, nhập tên miền (GitHub tạo file `CNAME`).
 3. Tại nhà cung cấp tên miền, tạo bản ghi DNS:
    - tên miền gốc: 4 bản ghi `A` trỏ tới `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`;
-   - hoặc tên miền con `www`: bản ghi `CNAME` trỏ tới `OWNER.github.io`.
+   - hoặc tên miền con `www`: bản ghi `CNAME` trỏ tới `huyduong5.github.io`.
 4. Đợi DNS cập nhật rồi bật **Enforce HTTPS**.
 
 ## Nguồn dữ liệu và giấy phép
