@@ -71,20 +71,20 @@ export async function render(host) {
     notice("Mùa mưa IX–XII chiếm khoảng hai phần ba lượng mưa năm; tháng XI mưa nhiều nhất. Các ngày mưa lớn nhất mỗi năm đều rơi vào mùa này và phần lớn trùng với ngày xảy ra trượt lở."),
     h("div", { class: "grid grid-2" }, evCard.root, lsCard.root));
 
-  // Bản đồ Leaflet: CARTO làm nền mặc định (tile.openstreetmap.org không truy cập được từ một số mạng)
+  // Bản đồ Leaflet: nền Esri mặc định (tile.openstreetmap.org không truy cập được từ một số mạng ở Việt Nam)
   if (window.L) {
     const L = window.L;
     const osmAttr = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+    const esri = (name) => `https://server.arcgisonline.com/ArcGIS/rest/services/${name}/MapServer/tile/{z}/{y}/{x}`;
     const layers = {
-      "Bản đồ nền (CARTO)": L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-        maxZoom: 19, subdomains: "abcd", attribution: `${osmAttr} &copy; <a href="https://carto.com/attributions">CARTO</a>`,
-      }),
-      "Địa hình (Esri)": L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}", {
-        maxZoom: 18, attribution: "Tiles &copy; Esri",
+      "Đường phố (Esri)": L.tileLayer(esri("World_Street_Map"), { maxZoom: 18, attribution: "Tiles &copy; Esri" }),
+      "Địa hình (Esri)": L.tileLayer(esri("World_Topo_Map"), { maxZoom: 18, attribution: "Tiles &copy; Esri" }),
+      "Địa hình (OpenTopoMap)": L.tileLayer("https://tile.opentopomap.org/{z}/{x}/{y}.png", {
+        maxZoom: 17, attribution: `${osmAttr}, SRTM | Kiểu bản đồ &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (CC-BY-SA)`,
       }),
       "OpenStreetMap": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: osmAttr }),
     };
-    const map = L.map(mapEl, { scrollWheelZoom: false, layers: [layers["Bản đồ nền (CARTO)"]] }).setView([meta.lat, meta.lon], 9);
+    const map = L.map(mapEl, { scrollWheelZoom: false, layers: [layers["Đường phố (Esri)"]] }).setView([meta.lat, meta.lon], 9);
     L.control.layers(layers, null, { collapsed: true }).addTo(map);
     window.L.marker([meta.lat, meta.lon]).addTo(map)
       .bindPopup(`<strong>${meta.station}</strong><br>Lượng mưa năm TB: ${fmt(tA.mean, 0)} mm<br><a href="#/tra-cuu">Tra cứu số liệu</a>`).openPopup();
