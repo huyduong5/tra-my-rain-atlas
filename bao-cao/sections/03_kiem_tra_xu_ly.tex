@@ -1,0 +1,39 @@
+% =====================================================================
+%  MỤC 2 — KIỂM TRA VÀ XỬ LÝ DỮ LIỆU
+% =====================================================================
+\section{Kiểm tra và xử lý dữ liệu}
+
+Trước khi tính toán các đặc trưng thống kê, chuỗi số liệu mưa giờ tại trạm \TenTram{} giai đoạn \GiaiDoan{} được kiểm tra nhằm đánh giá tính đầy đủ, liên tục và chất lượng dữ liệu. Nội dung kiểm tra gồm: tính liên tục của chuỗi thời gian (đủ 24 giờ mỗi ngày, không trùng lặp), các giá trị bị thiếu và các khoảng thời gian thiếu số liệu kéo dài. Kết quả được tổng hợp trong Bảng~\ref{tab:qc}.
+
+\begin{table}[H]
+  \centering
+  \caption{Tổng hợp chất lượng số liệu quan trắc tại trạm \TenTram.}
+  \label{tab:qc}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{6.8cm}|>{\raggedright\arraybackslash}X|}
+    \hline
+    \textbf{Nội dung} & \textbf{Trạm \TenTram} \\
+    \hline
+    \input{tables/qc}
+  \end{tabularx}
+\end{table}
+
+Chuỗi số liệu có cấu trúc thời gian hoàn chỉnh: đủ 3\,653 ngày, mỗi ngày đủ 24 bản ghi và không có bản ghi trùng lặp. Tổng cộng có 3\,243 giờ (3,7\%) không có giá trị lượng mưa. Tỉ lệ thiếu ở phần lớn các năm chỉ từ 2,1\% đến 2,8\%, riêng năm 2009 (9,7\%) và 2017 (7,0\%) cao hơn rõ rệt. Các giá trị thiếu tập trung theo hai dạng:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \textbf{Thiếu kéo dài:} toàn bộ tháng 11/2009 (từ 01/11 đến 01/12/2009, 31 ngày liên tiếp) và phần lớn tháng 01/2017 (ba đợt 05--14/01, 16--20/01 và 26--31/01/2017, tổng cộng 21 ngày). Đáng chú ý, tháng XI là tháng có lượng mưa lớn nhất trong năm, nên việc thiếu tháng 11/2009 làm tổng lượng mưa năm và mùa mưa năm 2009 bị thấp hơn thực tế.
+  \item \textbf{Thiếu lẻ tẻ có tính hệ thống:} 105 trong số 120 ngày mùng 1 hằng tháng không đủ số liệu (thiếu hầu hết các giờ trong ngày). Đây nhiều khả năng là lỗi khi ghép các bảng số liệu theo tháng, làm tổng lượng mưa mỗi tháng có thể bị thấp hơn thực tế khoảng một ngày mưa.
+\end{itemize}
+
+Trên cơ sở kết quả kiểm tra, các quy tắc xử lý sau được áp dụng:
+
+\begin{enumerate}[label=(\arabic*), leftmargin=1.5cm]
+  \item \textbf{Ngày hợp lệ:} ngày có ít nhất 20/24 giờ có số liệu; lượng mưa ngày bằng tổng các giờ có số liệu. Các ngày còn lại được gán giá trị thiếu và không đưa vào tính toán. Kết quả có 3\,494 ngày hợp lệ (95,6\%).
+  \item \textbf{Tháng hợp lệ:} tháng có ít nhất 90\% số ngày hợp lệ. Chỉ có 2 tháng không đạt là 11/2009 (0\%) và 01/2017 (19\%), còn lại 118/120 tháng hợp lệ.
+  \item \textbf{Năm và mùa hợp lệ:} tổng lượng mưa năm (hoặc mùa) chỉ được đưa vào thống kê khi mọi tháng trong năm (hoặc mùa) đều hợp lệ. Theo quy tắc này, mưa năm có 8 năm hợp lệ (loại 2009 và 2017), mùa mưa có 9 năm (loại 2009), mùa khô có 9 năm (loại 2017).
+  \item \textbf{Chuỗi cực trị năm} (Rx1day, Rx5day, Rx1hour) vẫn sử dụng đủ 10 năm vì tỉ lệ ngày hợp lệ năm thấp nhất là 89,6\% (năm 2009); tỉ lệ này được ghi kèm trong Bảng~\ref{tab:rx}.
+\end{enumerate}
+
+\HinhAnh[0.9\linewidth]{fig01_qc_heatmap.png}{Tỉ lệ ngày có số liệu hợp lệ theo tháng tại trạm \TenTram{} giai đoạn \GiaiDoan.}{fig:qc}
+
+Hình~\ref{fig:qc} cho thấy chuỗi số liệu khá đồng đều: hầu hết các tháng đạt 96--100\% ngày hợp lệ (giá trị 96--97\% tương ứng với việc thiếu ngày mùng 1), chỉ hai ô tháng 11/2009 và 01/2017 nổi bật với tỉ lệ rất thấp.

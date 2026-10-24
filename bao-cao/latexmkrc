@@ -1,0 +1,3 @@
+# Overleaf đọc file này: biên dịch bằng XeLaTeX (hỗ trợ tiếng Việt Unicode).
+# Nếu Overleaf vẫn dùng pdfLaTeX: Menu > Settings > Compiler > XeLaTeX.
+$pdf_mode = 5;

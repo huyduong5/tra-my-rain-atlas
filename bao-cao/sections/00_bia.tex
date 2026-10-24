@@ -1,0 +1,50 @@
+% =====================================================================
+%  TRANG BÌA — theo mẫu: khung đôi, tên trường/khoa, logo, tiêu đề,
+%  khối thông tin sinh viên thẳng cột, địa điểm và năm ở đáy khung
+% =====================================================================
+\newgeometry{left=2.5cm, right=2.5cm, top=2.4cm, bottom=2.4cm}
+\begin{titlepage}
+  \begin{tikzpicture}[remember picture, overlay]
+    % viền ngoài dày
+    \draw[line width=2.5pt]
+      ($(current page.north west)+(1.5cm,-1.5cm)$) rectangle
+      ($(current page.south east)+(-1.5cm,1.5cm)$);
+    % viền trong mảnh
+    \draw[line width=0.75pt]
+      ($(current page.north west)+(1.5cm+4pt,-1.5cm-4pt)$) rectangle
+      ($(current page.south east)+(-1.5cm-4pt,1.5cm+4pt)$);
+  \end{tikzpicture}%
+
+  \centering
+  \setstretch{1.2}
+
+  {\TenTruong\par}
+  \vspace{2pt}
+  {\bfseries \TenKhoa\par}
+
+  \vspace{1.6cm}
+  \IfFileExists{figures/logo_dhkhtn.jpg}{%
+    \includegraphics[height=3cm]{figures/logo_dhkhtn.jpg}\par
+  }{\vspace{3cm}}
+
+  \vspace{1.6cm}
+  {\bfseries\large \LoaiBaoCao\par}
+
+  \vspace{0.9cm}
+  {\bfseries\Large \TieuDe\par}
+
+  \vspace{2.4cm}
+  {\raggedright
+  \hspace*{1cm}%
+  \begin{tabular}{@{}l@{\hspace{1.4cm}}l@{}}
+    \textbf{Họ và tên}           & \textbf{:}\enspace \HoTen   \\[3pt]
+    \textbf{Ngành}               & \textbf{:}\enspace \Nganh   \\[3pt]
+    \textbf{Khóa}                & \textbf{:}\enspace \KhoaHoc \\[3pt]
+    \textbf{Giáo viên hướng dẫn} & \textbf{:}\enspace \GVHD    \\
+  \end{tabular}\par}
+
+  \vfill
+  {\NoiNam\par}
+  \vspace{0.3cm}
+\end{titlepage}
+\restoregeometry

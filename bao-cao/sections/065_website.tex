@@ -1,0 +1,72 @@
+% =====================================================================
+%  MỤC 6 — WEBSITE TRA CỨU VÀ TRỰC QUAN HÓA DỮ LIỆU
+% =====================================================================
+\section{Website tra cứu và trực quan hóa dữ liệu}
+\label{sec:website}
+
+\subsection{Mục tiêu và địa chỉ truy cập}
+
+Các bảng và hình trong báo cáo chỉ trình bày được một số giá trị tiêu biểu, trong khi chuỗi số liệu gồm 87\,672 giờ quan trắc. Để người đọc có thể tự tra cứu bất kỳ ngày, giờ nào và kiểm tra lại các kết quả, toàn bộ phân tích được xây dựng thành website \textbf{Trà My Rain Atlas}, truy cập công khai tại:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item Website: \WebURL
+  \item Mã nguồn (GitHub): \GitHubURL
+\end{itemize}
+
+Website không cần đăng nhập, dùng được trên máy tính và điện thoại. Mọi số liệu trên website được tính bằng cùng chương trình Python với báo cáo này nên kết quả trùng khớp (Mục~\ref{sec:web-kientruc}).
+
+\subsection{Chức năng}
+
+Cách tổ chức website tham khảo hai hệ thống tra cứu mưa cực trị phổ biến: cổng tra cứu tần suất mưa NOAA Atlas 14 (PFDS) \cite{pfds} với bảng mức mưa theo chu kỳ lặp kèm khoảng tin cậy, và Climdex \cite{climdex} với các chỉ số cực trị ETCCDI theo năm. Website gồm 9 trang, trong đó mỗi câu hỏi của bài tập có một trang riêng (Bảng~\ref{tab:web-trang}).
+
+\begin{table}[H]
+  \centering
+  \caption{Các trang của website Trà My Rain Atlas.}
+  \label{tab:web-trang}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{3.4cm}|L|>{\centering\arraybackslash}p{1.6cm}|}
+    \hline
+    \textbf{Trang} & \textbf{Nội dung chính} & \textbf{Câu hỏi} \\
+    \hline
+    Tổng quan & Số liệu chính, bản đồ vị trí trạm, đợt mưa lớn nhất 03--07/11/2017, mưa và trượt lở & -- \\ \hline
+    Tra cứu & Chọn một ngày bất kỳ: mưa 24 giờ so với R95p/R99p giờ, lịch nhiệt mưa ngày 10 năm, chuỗi mưa ngày có phóng to & -- \\ \hline
+    Thống kê & Thống kê mưa giờ, ngày, tháng, năm, mùa; lọc theo khoảng năm; biểu đồ hộp, lịch nhiệt tháng & Câu 1 \\ \hline
+    Cực trị & Rx1day, Rx5day, Rx1hour từng năm; biểu đồ mưa giờ và lượng tích lũy của từng đợt Rx5day & Câu 2 \\ \hline
+    Ngưỡng R95p/R99p & Ngưỡng mưa giờ, mưa ngày (cả năm và mùa mưa); số lần vượt theo năm, tháng; công cụ tra phân vị của một lượng mưa & Câu 3 \\ \hline
+    Chu kỳ lặp & Bảng mức mưa T = 2--500 năm kèm khoảng tin cậy 95\%; đường tần suất 5 phân bố, POT; công cụ quy đổi chu kỳ và lượng mưa & Câu 4 \\ \hline
+    Trượt lở & 28 ngày trượt lở so với mưa ngày, mưa tích lũy 5 ngày và ngưỡng R95p/R99p & Mở rộng \\ \hline
+    Tải dữ liệu & Số liệu gốc, CSV mưa ngày, tháng, năm, chỉ số cực trị, chu kỳ lặp; JSON kết quả & -- \\ \hline
+    Phương pháp & Quy tắc kiểm tra số liệu, định nghĩa chỉ số, công thức, tài liệu tham khảo & -- \\ \hline
+  \end{tabularx}
+\end{table}
+
+Ngoài nội dung phân tích, website có các tiện ích giúp tra cứu dễ dàng: đường link trên thanh địa chỉ luôn trỏ tới đúng trạng thái đang xem (ví dụ một ngày cụ thể, một khoảng năm hoặc một mô hình phân bố) nên có thể gửi cho người khác; các bảng sắp xếp, lọc nhanh và tải về dạng CSV; mỗi biểu đồ có nút lưu ảnh PNG, cho phép phóng to và xem giá trị khi rê chuột; giao diện tự sắp xếp lại trên màn hình điện thoại.
+
+\subsection{Kiến trúc và công nghệ}
+\label{sec:web-kientruc}
+
+Website gồm ba thành phần:
+
+\begin{enumerate}[label=(\arabic*), leftmargin=1.2cm]
+  \item \textbf{Tính toán dữ liệu (Python).} Chương trình \texttt{scripts/build\_data.py} dùng lại các hàm phân tích của báo cáo để tính toàn bộ kết quả và xuất thành các tệp JSON gọn (khoảng 0,5 MB). Mưa giờ được tách thành 10 tệp theo năm và chỉ tải khi người dùng xem năm đó.
+  \item \textbf{Giao diện (HTML, CSS, JavaScript).} Website chạy hoàn toàn trên trình duyệt, không cần máy chủ xử lý. Biểu đồ tương tác vẽ bằng thư viện Apache ECharts \cite{echarts}, bản đồ dùng Leaflet \cite{leaflet} với ảnh nền Esri và OpenStreetMap.
+  \item \textbf{Triển khai tự động.} Mã nguồn lưu trên GitHub và được phát hành qua GitHub Pages \cite{ghpages}. Mỗi lần cập nhật, quy trình GitHub Actions chạy \texttt{scripts/validate\_data.py} để kiểm tra dữ liệu (độ dài chuỗi, ngưỡng R95p/R99p, Rx1day lớn nhất 781,6 mm, mức mưa 100 năm 849,8 mm/ngày và 114,5 mm/giờ…); chỉ khi tất cả đều khớp với báo cáo thì website mới được cập nhật.
+\end{enumerate}
+
+\subsection{Minh họa}
+
+\HinhAnh[0.9\linewidth]{web01_tong_quan.jpg}{Trang Tổng quan của website: thẻ số liệu chính, bốn câu hỏi phân tích, bản đồ vị trí trạm và khí hậu mưa tháng.}{fig:web-tongquan}
+
+Trang Tổng quan (Hình~\ref{fig:web-tongquan}) tóm tắt các con số quan trọng nhất của báo cáo (lượng mưa năm trung bình 4\,192 mm, mưa ngày lớn nhất 781,6 mm, R95p ngày 89,2 mm, mưa ngày chu kỳ 100 năm 850 mm, 28 ngày trượt lở) và dẫn tới trang riêng của từng câu hỏi.
+
+\HinhAnh[0.9\linewidth]{web02_tra_cuu.jpg}{Trang Tra cứu ngày 05/11/2017: lượng mưa ngày, giờ mưa lớn nhất và mưa từng giờ so với ngưỡng R95p, R99p giờ (cột đỏ sẫm: giờ có ghi nhận trượt lở).}{fig:web-tracuu}
+
+Hình~\ref{fig:web-tracuu} minh họa chức năng tra cứu: với ngày mưa lớn nhất 05/11/2017, website cho biết lượng mưa ngày 781,6 mm thuộc nhóm cực kỳ lớn (vượt R99p), cả 24 giờ đều có mưa, giờ lớn nhất 80,1 mm lúc 12 giờ; có 15 giờ vượt ngưỡng R95p giờ (20,1 mm), trong đó 7 giờ vượt R99p giờ (39,4 mm).
+
+\HinhAnh[\linewidth]{web03_chu_ky.jpg}{Đường tần suất mưa ngày lớn nhất năm trên website: điểm quan trắc (Gringorten), đường của các phân bố và dải khoảng tin cậy 95\% của phân bố Gumbel.}{fig:web-chuky}
+
+Trang Chu kỳ lặp (Hình~\ref{fig:web-chuky}) cho phép chuyển giữa mưa giờ và mưa ngày, chọn mô hình phân bố, và quy đổi hai chiều: nhập chu kỳ $T$ để biết lượng mưa tương ứng, hoặc nhập lượng mưa để biết chu kỳ lặp lại.
+
+\HinhAnh[\linewidth]{web04_truot_lo.jpg}{Trang Trượt lở: thống kê ngày có trượt lở, biểu đồ mưa ngày theo mưa tích lũy 5 ngày (điểm đỏ: ngày có trượt lở) và số ngày trượt lở theo năm, tháng.}{fig:web-truotlo}
+
+Hình~\ref{fig:web-truotlo} cho thấy trực quan kết luận ở Mục~4: hầu hết ngày có trượt lở nằm phía trên ngưỡng R95p của mưa ngày và có lượng mưa tích lũy 5 ngày lớn, tách biệt rõ với đám điểm xám của các ngày không có trượt lở.

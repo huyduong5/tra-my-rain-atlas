@@ -3,3 +3,12 @@ __pycache__/
 .DS_Store
 .venv/
 node_modules/
+analysis/outputs/
+*.aux
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.xdv
+*.synctex.gz

@@ -61,8 +61,17 @@ data/                         JSON cho website, data/hourly/ (mưa giờ theo n�
 scripts/build_data.py         Tính toàn bộ dữ liệu cho website
 scripts/validate_data.py      Kiểm tra dữ liệu (chạy trong CI)
 analysis/                     Chương trình phân tích dùng chung với báo cáo
+bao-cao/                      Mã LaTeX báo cáo (XeLaTeX, dùng được trên Overleaf)
 .github/workflows/deploy.yml  Kiểm tra + triển khai GitHub Pages
 ```
+
+## Báo cáo
+
+Thư mục [`bao-cao/`](bao-cao/) chứa mã LaTeX đầy đủ của báo cáo *Phân tích dữ liệu mưa giờ tại trạm quan trắc Trà My giai đoạn 2008–2017* (4 câu hỏi phân tích, mục giới thiệu website, phụ lục có mã QR dẫn tới website và repo).
+
+- Biên dịch trên Overleaf: nén thư mục `bao-cao/` thành zip → **New Project → Upload Project**; trình biên dịch XeLaTeX đã cấu hình sẵn trong `latexmkrc`.
+- Biên dịch trên máy có TeX Live: `cd bao-cao && latexmk -xelatex main.tex`.
+- Bảng (`bao-cao/tables/`) và hình (`bao-cao/figures/fig*.png`) được sinh bởi `python3 analysis/report_analysis.py`.
 
 ## Chạy trên máy
 

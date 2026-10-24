@@ -1,0 +1,115 @@
+% =====================================================================
+%  MỤC 5 — MƯA CỰC ĐẠI THEO CHU KỲ LẶP LẠI (CÂU 4)
+% =====================================================================
+\section{Mức mưa giờ, mưa ngày cực đại ứng với chu kỳ lặp lại 100, 50, 20, 10 năm}
+\label{sec:chuky}
+
+% ---------------------------------------------------------------------
+\subsection{Phương pháp}
+
+Lượng mưa cực đại ứng với chu kỳ lặp lại $T = 10, 20, 50, 100$ năm được xác định bằng phương pháp phân tích tần suất trên chuỗi cực đại năm (AMS -- Annual Maximum Series), gồm chuỗi mưa giờ lớn nhất năm (Rx1hour) và chuỗi mưa ngày lớn nhất năm (Rx1day) của 10 năm 2008--2017 (Bảng~\ref{tab:rx}). Mức mưa $x_T$ ứng với chu kỳ $T$ năm là phân vị có xác suất không vượt $F(x_T) = 1 - 1/T$. Quy trình gồm các bước:
+
+\begin{enumerate}[label=\textbf{Bước \arabic*.}, leftmargin=2cm]
+  \item \textbf{Khớp 5 phân bố} bằng phương pháp hợp lý cực đại (MLE, hàm \texttt{scipy.stats.*.fit}): Gumbel, cực trị tổng quát GEV, chuẩn loga 2 tham số (LN2), Gamma và Weibull (3 phân bố sau có tham số vị trí bằng 0). Phân bố Gumbel có hàm phân phối
+  \begin{equation}
+    F(x) = \exp\!\left[-\exp\!\left(-\frac{x-\mu}{\beta}\right)\right], \qquad
+    x_T = \mu - \beta \ln\!\left[-\ln\!\left(1 - \frac{1}{T}\right)\right],
+  \end{equation}
+  còn phân bố GEV \cite{coles2001} có thêm tham số hình dạng $\xi$ ($\xi > 0$: đuôi nặng, $\xi = 0$: trở về Gumbel):
+  \begin{equation}
+    F(x) = \exp\!\left\{-\left[1 + \xi\,\frac{x-\mu}{\sigma}\right]^{-1/\xi}\right\}.
+  \end{equation}
+  \item \textbf{Đánh giá mức độ phù hợp} bằng tiêu chuẩn thông tin $\text{AIC} = 2k - 2\ln L$ và $\text{BIC} = k\ln n - 2\ln L$ \cite{akaike1974} ($k$ là số tham số, $L$ là hàm hợp lý cực đại) và các thống kê khoảng cách giữa hàm phân phối thực nghiệm và lý thuyết: Kolmogorov--Smirnov (KS), Cramér--von Mises (CvM) và Anderson--Darling (AD) \cite{stephens1974}:
+  \begin{equation}
+    A^2 = -n - \frac{1}{n}\sum_{i=1}^{n} (2i-1)\left[\ln F(x_{(i)}) + \ln\bigl(1 - F(x_{(n+1-i)})\bigr)\right].
+  \end{equation}
+  Giá trị AIC, BIC, KS, CvM, AD càng nhỏ thì phân bố càng phù hợp.
+  \item \textbf{Chọn phân bố:} phân bố hai tham số có AIC nhỏ nhất; nếu chênh lệch AIC so với Gumbel nhỏ hơn 2 (hai mô hình được coi là tương đương) thì chọn Gumbel, là phân bố kinh điển cho cực đại năm của mưa. GEV có 3 tham số, với $n = 10$ ước lượng tham số hình dạng rất bất định, nên chỉ dùng để đối chiếu.
+  \item \textbf{Khoảng tin cậy 95\%} của $x_T$ được ước lượng bằng bootstrap tham số: sinh 2\,000 mẫu cỡ $n = 10$ từ phân bố đã chọn, khớp lại và tính $x_T$; lấy phân vị 2,5\% và 97,5\% của các giá trị thu được.
+  \item \textbf{Phân tích độ nhạy:} so sánh với (i) các phân bố còn lại; (ii) Gumbel ước lượng bằng L-moment \cite{hosking1990}; (iii) phương pháp vượt ngưỡng POT với phân bố Pareto tổng quát (GPD) \cite{pickands1975}, ngưỡng $u$ = R95p (Mục~4.2), các lần vượt cách nhau ít hơn 24 giờ (mưa giờ) hoặc 3 ngày (mưa ngày) được gộp thành một đợt và lấy giá trị đỉnh:
+  \begin{equation}
+    x_T = u + \frac{\sigma}{\xi}\left[(\lambda T)^{\xi} - 1\right],
+  \end{equation}
+  với $\lambda$ là số đợt vượt ngưỡng trung bình mỗi năm; (iv) Gumbel khi bỏ giá trị lớn nhất của chuỗi.
+\end{enumerate}
+
+Tần suất kinh nghiệm của chuỗi cực đại được tính theo công thức Gringorten \cite{gringorten1963}: $F_i = (i - 0{,}44)/(n + 0{,}12)$, $T_i = 1/(1 - F_i)$, với $i$ là thứ hạng tăng dần.
+
+% ---------------------------------------------------------------------
+\subsection{Kết quả khớp phân bố}
+
+\begin{table}[H]
+  \centering
+  \caption{Kết quả khớp các phân bố cho Rx1hour -- Trạm \TenTram{} (n = 10).}
+  \label{tab:fit-gio}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|l|>{\raggedright\arraybackslash}p{3.9cm}|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Phân bố} & \textbf{Tham số ước lượng} & \textbf{logL} & \textbf{AIC} & \textbf{BIC} & \textbf{KS} & \textbf{CvM} & \textbf{AD} \\
+    \hline
+    \input{tables/fit_gio}
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Kết quả khớp các phân bố cho Rx1day -- Trạm \TenTram{} (n = 10).}
+  \label{tab:fit-ngay}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|l|>{\raggedright\arraybackslash}p{3.9cm}|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Phân bố} & \textbf{Tham số ước lượng} & \textbf{logL} & \textbf{AIC} & \textbf{BIC} & \textbf{KS} & \textbf{CvM} & \textbf{AD} \\
+    \hline
+    \input{tables/fit_ngay}
+  \end{tabularx}
+  \GhiChuBang{$^{*}$ Phân bố được chọn. Đơn vị tham số vị trí/tỉ lệ: mm.}
+\end{table}
+
+\textbf{Mưa giờ (Rx1hour).} Gumbel có AIC nhỏ nhất (86,82) trong các phân bố hai tham số, đồng thời có KS (0,102), CvM (0,019) và AD (0,168) nhỏ; chuẩn loga và Gamma có AIC chênh lệch dưới 1,2 đơn vị nên phù hợp gần tương đương. Weibull kém phù hợp nhất (AIC 90,34; AD 0,506). GEV cho tham số hình dạng $\xi = 0{,}113$ (đuôi hơi nặng hơn Gumbel) nhưng log-hợp lý chỉ tăng 0,11 so với Gumbel, không đủ bù cho tham số thêm vào (AIC 88,60). \textbf{Phân bố Gumbel được chọn.}
+
+\textbf{Mưa ngày (Rx1day).} Chuẩn loga có AIC nhỏ nhất (131,84), nhưng chỉ thấp hơn Gumbel 0,32 đơn vị; các chỉ tiêu KS, CvM, AD của Gumbel, chuẩn loga và Gamma rất gần nhau (AD 0,26--0,28). Theo quy tắc ở Bước 3, \textbf{phân bố Gumbel được chọn}. GEV cho $\xi = 0{,}148$ và cũng không cải thiện đáng kể log-hợp lý. Với mọi phân bố, thống kê KS đều nhỏ hơn giá trị tới hạn ở mức ý nghĩa 5\% (khoảng 0,41 với $n = 10$), tức không phân bố nào bị bác bỏ; điều này phản ánh hạn chế của mẫu nhỏ trong việc phân biệt các mô hình.
+
+% ---------------------------------------------------------------------
+\subsection{Mức mưa cực đại theo chu kỳ lặp lại}
+
+\begin{table}[H]
+  \centering
+  \caption{Mưa giờ và mưa ngày cực đại (mm) ứng với các chu kỳ lặp lại theo phân bố Gumbel.}
+  \label{tab:chuky}
+  \small
+  \begin{tabularx}{\linewidth}{|c|Y|Y|Y|Y|}
+    \hline
+    \multirow{2}{*}{\textbf{Chu kỳ T}} & \multicolumn{2}{c|}{\textbf{Mưa giờ -- Rx1hour (Gumbel)}} & \multicolumn{2}{c|}{\textbf{Mưa ngày -- Rx1day (Gumbel)}} \\
+    \cline{2-3} \cline{4-5}
+     & \textbf{Ước lượng} & \textbf{KTC 95\%} & \textbf{Ước lượng} & \textbf{KTC 95\%} \\
+    \hline
+    \input{tables/chuky}
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Độ nhạy của mưa cực đại (mm) theo mô hình và theo dữ liệu đầu vào.}
+  \label{tab:donhay}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|l|>{\raggedright\arraybackslash}p{5.6cm}|Y|Y|Y|Y|}
+    \hline
+    \textbf{Chuỗi} & \textbf{Phương án} & \textbf{T = 100} & \textbf{T = 50} & \textbf{T = 20} & \textbf{T = 10} \\
+    \hline
+    \input{tables/donhay}
+  \end{tabularx}
+\end{table}
+
+\textbf{Mưa giờ cực đại.} Theo phân bố Gumbel (Bảng~\ref{tab:chuky}), mức mưa giờ cực đại tại trạm \TenTram{} là \textbf{85,0 mm} (10 năm), \textbf{94,0 mm} (20 năm), \textbf{105,8 mm} (50 năm) và \textbf{114,5 mm} (100 năm); khoảng tin cậy 95\% của mức 100 năm là 82,0--146,5 mm. Giá trị lớn nhất quan trắc được (107,0 mm ngày 31/03/2013) tương ứng chu kỳ lặp lại khoảng 55 năm. Theo Bảng~\ref{tab:donhay}, các mô hình khác cho mức 100 năm trong khoảng 103,9--128,4 mm (thấp nhất là POT--GPD, cao nhất là GEV); mức 10 năm rất nhất quán giữa các mô hình (83,6--89,2 mm). Phương pháp POT dựa trên 194 đợt vượt ngưỡng 20,1 mm (khoảng 20 đợt/năm) với $\xi = -0{,}079$ cho kết quả thấp hơn Gumbel khoảng 9\% ở mức 100 năm. Nếu bỏ giá trị 107,0 mm năm 2013, mức 100 năm giảm còn 98,9 mm, cho thấy một giá trị đơn lẻ có ảnh hưởng đáng kể tới ước lượng.
+
+\textbf{Mưa ngày cực đại.} Mức mưa ngày cực đại theo Gumbel là \textbf{564,3 mm} (10 năm), \textbf{651,7 mm} (20 năm), \textbf{764,9 mm} (50 năm) và \textbf{849,8 mm} (100 năm). Khoảng tin cậy 95\% rất rộng: 396,5--733,3 mm ở mức 10 năm và 548,5--1\,141,1 mm ở mức 100 năm. Lượng mưa ngày 781,6 mm ngày 05/11/2017 tương ứng chu kỳ lặp lại khoảng 57 năm theo Gumbel. Các phương án khác cho mức 100 năm từ 803,5 mm (Weibull) đến 1\,029,5 mm (GEV); phương pháp POT (48 đợt vượt ngưỡng 89,2 mm, khoảng 5 đợt/năm, $\xi = 0{,}087$) cho 978,0 mm, còn Gumbel ước lượng bằng L-moment cho 930,5 mm. Mức 10--20 năm khá nhất quán giữa các phương pháp (564--600 mm và 652--705 mm, sai khác dưới 10\%), nên có độ tin cậy trung bình; mức 50--100 năm là ngoại suy xa gấp 5--10 lần độ dài chuỗi. Kết quả chịu ảnh hưởng lớn của năm 2017: nếu bỏ giá trị 781,6 mm, mức 100 năm giảm từ 849,8 mm xuống 693,5 mm (giảm 18\%).
+
+\HinhAnh[0.9\linewidth]{fig12_freq_hourly.png}{Đường tần suất mưa giờ lớn nhất năm (Rx1hour) theo các phân bố, kèm khoảng tin cậy 95\% của phân bố Gumbel.}{fig:chuky-gio}
+
+\HinhAnh[0.9\linewidth]{fig13_freq_daily.png}{Đường tần suất mưa ngày lớn nhất năm (Rx1day) theo các phân bố, kèm khoảng tin cậy 95\% của phân bố Gumbel.}{fig:chuky-ngay}
+
+\HinhAnh[\linewidth]{fig14_qq.png}{Biểu đồ Q--Q của phân bố Gumbel và GEV cho Rx1hour (a) và Rx1day (b).}{fig:qq}
+
+Hình~\ref{fig:chuky-gio} và Hình~\ref{fig:chuky-ngay} cho thấy các điểm quan trắc (tần suất Gringorten) bám tương đối sát đường Gumbel, ngoại trừ giá trị lớn nhất của mỗi chuỗi. Các đường phân bố gần như trùng nhau trong vùng có số liệu (chu kỳ dưới 10 năm) và chỉ tách nhau rõ khi ngoại suy tới 50--100 năm: GEV (đuôi nặng, $\xi > 0$) luôn cho giá trị cao nhất, Weibull và Gamma cho giá trị thấp hơn Gumbel; chuẩn loga cao hơn Gumbel với mưa ngày nhưng thấp hơn với mưa giờ. Mọi đường phân bố đều nằm trong dải khoảng tin cậy 95\% của Gumbel. Biểu đồ Q--Q (Hình~\ref{fig:qq}) cho thấy 9/10 điểm nằm sát đường 1:1; riêng giá trị lớn nhất của mỗi chuỗi (107,0 mm/giờ năm 2013 và 781,6 mm/ngày năm 2017) nằm phía trên đường, nghĩa là cực trị quan trắc lớn hơn dự báo của mô hình ở cùng tần suất kinh nghiệm. GEV với $\xi > 0$ thu hẹp phần nào độ lệch này.
+
+\paragraph{Lưu ý.} Chuỗi cực đại năm chỉ có 10 giá trị nên các mức mưa ứng với chu kỳ 50--100 năm là ngoại suy xa và có độ bất định lớn (khoảng tin cậy 95\% của mức 100 năm rộng khoảng $\pm 28\%$ với mưa giờ và $\pm 35\%$ với mưa ngày so với giá trị ước lượng). Khi sử dụng cho tính toán thiết kế, nên kết hợp thêm chuỗi số liệu dài hơn hoặc số liệu các trạm lân cận (phân tích tần suất vùng).

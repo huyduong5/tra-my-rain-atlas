@@ -1,0 +1,106 @@
+% =====================================================================
+%  MỤC 4 — MƯA CỰC TRỊ VÀ NGƯỠNG R95p, R99p (CÂU 2 VÀ CÂU 3)
+% =====================================================================
+\section{Mưa cực trị và ngưỡng mưa rất lớn (R95p), cực kỳ lớn (R99p)}
+
+% ---------------------------------------------------------------------
+\subsection{Mưa ngày lớn nhất (Rx1day) và mưa 5 ngày liên tiếp lớn nhất năm (Rx5day)}
+
+\paragraph{Định nghĩa và công cụ.} Theo hệ chỉ số ETCCDI \cite{zhang2011, climdex}, Rx1day là lượng mưa ngày lớn nhất trong năm và Rx5day là tổng lượng mưa lớn nhất của 5 ngày liên tiếp bất kỳ trong năm:
+\begin{equation}
+  \text{Rx1day}_j = \max_{i \in j} R_i, \qquad
+  \text{Rx5day}_j = \max_{i \in j} \sum_{k=i-4}^{i} R_k ,
+\end{equation}
+trong đó $R_i$ là lượng mưa ngày $i$ của năm $j$. Rx5day được tính bằng tổng trượt 5 ngày (\texttt{pandas.Series.rolling(5).sum()}) trên chuỗi mưa ngày hợp lệ; cửa sổ chứa ngày thiếu số liệu bị loại. Vị trí cực đại được xác định bằng \texttt{idxmax}. Ngoài ra, lượng mưa giờ lớn nhất năm (Rx1hour) được xác định để phục vụ phân tích tần suất mưa giờ ở Mục~\ref{sec:chuky}.
+
+\begin{table}[H]
+  \centering
+  \caption{Rx1day, Rx5day và Rx1hour theo năm -- Trạm \TenTram.}
+  \label{tab:rx}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|c|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Năm} & \textbf{Số ngày hợp lệ (\%)} & \textbf{Rx1day (mm)} & \textbf{Ngày xảy ra} & \textbf{Rx5day (mm)} & \textbf{Giai đoạn 5 ngày} & \textbf{Rx1hour (mm)} \\
+    \hline
+    \input{tables/rx}
+  \end{tabularx}
+  \GhiChuBang{$^{\dagger}$ Ngày (hoặc giai đoạn 5 ngày) có ghi nhận trượt lở đất trong số liệu.}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê của Rx1day, Rx5day và Rx1hour (10 năm).}
+  \label{tab:rx-thongke}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|l|Y|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Chuỗi} & \textbf{n (năm)} & \textbf{TB} & \textbf{ĐLC} & \textbf{CV (\%)} & \textbf{Nhỏ nhất} & \textbf{Trung vị} & \textbf{Lớn nhất} \\
+    \hline
+    \input{tables/rx_thongke}
+  \end{tabularx}
+\end{table}
+
+Theo Bảng~\ref{tab:rx} và Bảng~\ref{tab:rx-thongke}, Rx1day tại trạm \TenTram{} trung bình đạt 364,8 mm, dao động từ 163,6 mm (năm 2014) đến 781,6 mm (ngày 05/11/2017), CV 48,7\%. Giá trị năm 2017 gấp hơn 2 lần trung bình và gấp 1,7 lần giá trị lớn thứ hai (458,7 mm ngày 29/09/2009). Tất cả 10 giá trị Rx1day đều xảy ra trong mùa mưa: 3 năm vào tháng IX, 2 năm vào tháng X và 5 năm vào tháng XI, trùng với thời kỳ hoạt động mạnh của không khí lạnh kết hợp nhiễu động nhiệt đới và bão trên khu vực Trung Bộ.
+
+Rx5day trung bình 677,7 mm, dao động từ 272,5 mm (năm 2012) đến 1\,255,4 mm (03--07/11/2017), CV 39,2\%. Tỉ số Rx5day/Rx1day trung bình 1,95 (1,33--2,71), nghĩa là lượng mưa của đợt 5 ngày lớn nhất thường gấp khoảng hai lần ngày mưa lớn nhất; ngày mưa lớn nhất chiếm trung bình 54\% (tối đa 75\%) tổng lượng mưa của đợt 5 ngày lớn nhất. Ở 6/10 năm, ngày Rx1day nằm trong giai đoạn Rx5day; ở các năm 2008, 2011, 2015 và 2016, đợt 5 ngày lớn nhất lại là một đợt mưa khác, kéo dài và đều hơn. Điều này cho thấy cần đánh giá đồng thời cả cường độ ngày và lượng mưa tích lũy nhiều ngày.
+
+Rx1hour trung bình 64,4 mm/giờ (41,7--107,0 mm/giờ), CV 28,7\%, biến động giữa các năm nhỏ hơn nhiều so với Rx1day. Khác với Rx1day, có 3/10 năm cực đại giờ xảy ra trong mùa khô (21/07/2009, 25/05/2010 và 31/03/2013), do mưa dông đối lưu buổi chiều có cường độ giờ lớn nhưng thời gian ngắn.
+
+\paragraph{Liên hệ với trượt lở đất.} Đối chiếu với cờ trượt lở trong số liệu cho thấy ngày Rx1day trùng với ngày có trượt lở ở \textbf{8/10 năm}, và giai đoạn Rx5day chứa ngày trượt lở ở \textbf{9/10 năm} (Bảng~\ref{tab:rx}, ký hiệu $^{\dagger}$). Năm duy nhất không ghi nhận trượt lở trong cả hai giai đoạn là 2012, cũng là năm có Rx5day nhỏ nhất (272,5 mm). Kết quả này khẳng định các đợt mưa cực trị nhiều ngày là yếu tố kích hoạt chính của trượt lở tại khu vực.
+
+\HinhAnh[0.95\linewidth]{fig07_rx_by_year.png}{Rx1day và Rx5day theo năm tại trạm \TenTram{} (nhãn trên cột: giá trị và ngày xảy ra Rx1day; tam giác: ngày Rx1day có trượt lở).}{fig:rx}
+
+\HinhAnh[\linewidth]{fig08_rx_hist_fit.png}{Histogram Rx1day (a) và Rx5day (b) của 10 năm kèm đường mật độ của phân bố Gumbel và chuẩn loga.}{fig:rx-hist}
+
+Hình~\ref{fig:rx} cho thấy Rx5day luôn lớn hơn Rx1day, và năm 2017 nổi bật với cả hai giá trị lớn nhất chuỗi. Hình~\ref{fig:rx-hist} thể hiện phân bố của Rx1day và Rx5day: 9/10 giá trị Rx1day nằm trong khoảng 160--460 mm và 8/10 giá trị Rx5day nằm trong khoảng 440--810 mm, còn giá trị năm 2017 nằm tách biệt ở đuôi phải. Hai đường mật độ Gumbel và chuẩn loga gần như trùng nhau trong vùng có số liệu; do chỉ có 10 năm, việc phân biệt hai phân bố chỉ mang tính tham khảo và được phân tích kỹ hơn ở Mục~\ref{sec:chuky}.
+
+\HinhAnh[0.95\linewidth]{fig09_event_max.png}{Diễn biến mưa giờ và lượng mưa tích lũy của đợt mưa Rx5day lớn nhất (03--07/11/2017); vùng tô đỏ nhạt: giờ có ghi nhận trượt lở.}{fig:event}
+
+Hình~\ref{fig:event} minh họa đợt mưa lớn nhất giai đoạn. Trong 5 ngày 03--07/11/2017, tổng lượng mưa đạt 1\,255,4 mm, lần lượt 50,0; 273,7; 781,6; 139,5 và 10,6 mm mỗi ngày. Mưa tăng dần từ chiều 03/11, đạt đỉnh vào trưa 05/11 (80,1 mm lúc 12 giờ) với 37 giờ có lượng mưa $\geq 10$ mm trong đợt. Riêng ngày 05/11 chiếm 62\% tổng lượng của đợt. Các giờ có ghi nhận trượt lở (23 giờ) tập trung trong khoảng chiều 04/11 đến cuối ngày 05/11, đúng thời điểm lượng mưa tích lũy tăng nhanh nhất.
+
+% ---------------------------------------------------------------------
+\subsection{Ngưỡng mưa rất lớn (R95p) và cực kỳ lớn (R99p)}
+
+\paragraph{Định nghĩa và công cụ.} Theo khuyến nghị của Nhóm chuyên gia về phát hiện biến đổi khí hậu và các chỉ số (ETCCDI) \cite{zhang2011, climdex}, R95p và R99p là phân vị 95\% và 99\% của lượng mưa trong các ngày mưa ($\geq 1$ mm) của thời kỳ cơ sở, ở đây là toàn bộ số liệu hợp lệ giai đoạn \GiaiDoan. Cách xác định tương tự được áp dụng cho mưa giờ, với mẫu là các giờ mưa $\geq 1$ mm. Giờ (ngày) có lượng mưa lớn hơn R95p là giờ (ngày) mưa rất lớn, lớn hơn R99p là giờ (ngày) mưa cực kỳ lớn. Phân vị được tính bằng \texttt{numpy.percentile} với nội suy tuyến tính. Đóng góp của mưa rất lớn được tính bằng tỉ số giữa tổng lượng mưa của các giờ (ngày) vượt ngưỡng và tổng lượng mưa của mọi giờ (ngày) mưa. Để so sánh theo mùa, ngưỡng cũng được tính riêng cho mùa mưa IX--XII.
+
+\begin{table}[H]
+  \centering
+  \caption{Ngưỡng R95p, R99p và các đặc trưng liên quan.}
+  \label{tab:nguong}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5.4cm}|Y|Y|Y|Y|}
+    \hline
+    \multirow{2}{*}{\textbf{Chỉ tiêu}} & \multicolumn{2}{c|}{\textbf{Mưa giờ}} & \multicolumn{2}{c|}{\textbf{Mưa ngày}} \\
+    \cline{2-3} \cline{4-5}
+     & \textbf{Cả năm} & \textbf{Mùa mưa} & \textbf{Cả năm} & \textbf{Mùa mưa} \\
+    \hline
+    \input{tables/nguong}
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Số giờ và số ngày mưa vượt R95p, R99p (ngưỡng cả năm) theo năm.}
+  \label{tab:vuot-nguong}
+  \small
+  \begin{tabularx}{\linewidth}{|c|Y|Y|Y|Y|}
+    \hline
+    \textbf{Năm} & \textbf{Số giờ $>$ R95p} & \textbf{Số giờ $>$ R99p} & \textbf{Số ngày $>$ R95p} & \textbf{Số ngày $>$ R99p} \\
+    \hline
+    \input{tables/vuot_nguong}
+  \end{tabularx}
+\end{table}
+
+\textbf{Mưa giờ.} Ngưỡng giờ mưa rất lớn (R95p) tại trạm \TenTram{} là \textbf{20,1 mm/giờ} và ngưỡng giờ mưa cực kỳ lớn (R99p) là \textbf{39,4 mm/giờ}, xác định từ 7\,663 giờ mưa. Ngưỡng tính riêng cho mùa mưa gần như không đổi (20,1 và 39,4 mm/giờ), phù hợp với nhận xét ở Mục~3.1 rằng cường độ mưa giờ khi đã mưa không khác nhiều giữa hai mùa. Trung bình mỗi năm có 38,1 giờ mưa rất lớn và 7,5 giờ mưa cực kỳ lớn. Chỉ 5\% số giờ mưa có lượng vượt R95p nhưng đóng góp 28,9\% tổng lượng mưa của các giờ mưa; 1\% số giờ vượt R99p đóng góp 9,0\%.
+
+\textbf{Mưa ngày.} Ngưỡng ngày mưa rất lớn (R95p) là \textbf{89,2 mm/ngày} và ngày mưa cực kỳ lớn (R99p) là \textbf{209,0 mm/ngày}, xác định từ 1\,628 ngày mưa. Theo phân cấp mưa thường dùng trong dự báo khí tượng (mưa to: 51--100 mm/24 giờ; mưa rất to: trên 100 mm/24 giờ), R95p nằm ở cận trên của cấp mưa to, còn R99p gấp khoảng 2 lần ngưỡng mưa rất to. Nếu chỉ xét mùa mưa, các ngưỡng tăng lên 154,6 mm (R95p) và 338,9 mm (R99p). Trung bình mỗi năm có 8,2 ngày mưa rất lớn và 1,7 ngày mưa cực kỳ lớn. Chỉ 5\% số ngày mưa nhưng các ngày vượt R95p đóng góp tới 34,3\% tổng lượng mưa ngày mưa, và 1\% số ngày vượt R99p đóng góp 13,5\%.
+
+Mưa rất lớn tập trung chủ yếu vào mùa mưa: 74/82 ngày vượt R95p thuộc các tháng IX--XII (nhiều nhất tháng XI với 29 ngày). Với mưa giờ, 251/381 giờ vượt R95p thuộc mùa mưa, nhưng mùa khô vẫn có 130 giờ (nhiều nhất tháng V và VIII), phản ánh vai trò của mưa dông. Theo năm (Bảng~\ref{tab:vuot-nguong}), năm 2016 có nhiều ngày mưa rất lớn nhất (15 ngày), tiếp theo là năm 2011 (14 ngày), còn năm 2012 chỉ có 2 ngày và 17 giờ vượt R95p, phù hợp với việc đây là năm ít mưa nhất. Năm 2017 có nhiều giờ mưa rất lớn nhất (60 giờ).
+
+Đáng chú ý, 27/28 ngày có ghi nhận trượt lở có lượng mưa ngày vượt R95p (89,2 mm), và 15/17 ngày mưa vượt R99p (209,0 mm) đều có trượt lở. Như vậy, ngưỡng R95p ngày có thể xem là mức cảnh báo nguy cơ trượt lở, còn R99p tương ứng với nguy cơ rất cao tại khu vực \TenTram.
+
+\HinhAnh[\linewidth]{fig10_thresholds.png}{Phân bố lượng mưa giờ (a) và mưa ngày (b) của các giờ/ngày mưa ($\geq 1$ mm) kèm ngưỡng R95p, R99p.}{fig:nguong}
+
+\HinhAnh[\linewidth]{fig11_exceed_year.png}{Số giờ (a) và số ngày (b) mưa vượt ngưỡng R95p, R99p theo năm tại trạm \TenTram.}{fig:vuot}
+
+Hình~\ref{fig:nguong} cho thấy ngưỡng R95p và R99p nằm ở phần đuôi phải của phân bố, nơi số lần xuất hiện giảm nhanh. Hình~\ref{fig:vuot} cho thấy số lần vượt ngưỡng biến động mạnh giữa các năm và không có xu thế tăng giảm rõ rệt trong 10 năm. Các năm 2011, 2016 và 2017 nổi bật với số giờ và số ngày vượt ngưỡng cao, trùng với các năm có tổng lượng mưa lớn.

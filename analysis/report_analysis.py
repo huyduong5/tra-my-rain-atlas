@@ -34,6 +34,8 @@ warnings.filterwarnings("ignore")
 
 ROOT = Path(__file__).resolve().parent
 TEX = ROOT / "bao_cao_latex"
+if not TEX.exists() and (ROOT.parent / "bao-cao").exists():  # bố cục repo: báo cáo ở bao-cao/
+    TEX = ROOT.parent / "bao-cao"
 TABLES = TEX / "tables"
 FIGS = TEX / "figures"
 NUM_PATH = ROOT / "outputs" / "report" / "report_numbers.json"

@@ -43,7 +43,7 @@ jobs:
         run: |
           mkdir -p _site
           rsync -a --exclude '.git' --exclude '.github' --exclude '_site' \
-                --exclude 'analysis' --exclude 'scripts' --exclude 'docs' --exclude '__pycache__' ./ _site/
+                --exclude 'analysis' --exclude 'scripts' --exclude 'docs' --exclude 'bao-cao' --exclude '__pycache__' ./ _site/
           # Gắn mã phiên bản để trình duyệt không dùng bản cũ trong bộ nhớ đệm
           BUILD="${GITHUB_SHA::7}"
           sed -i "s/__BUILD__/${BUILD}/g" _site/index.html

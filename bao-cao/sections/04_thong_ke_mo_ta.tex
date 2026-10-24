@@ -1,0 +1,141 @@
+% =====================================================================
+%  MỤC 3 — THỐNG KÊ MÔ TẢ (CÂU 1)
+% =====================================================================
+\section{Thống kê mô tả}
+
+\paragraph{Công cụ và công thức.} Các đặc trưng thống kê được tính bằng pandas/numpy trên các giá trị hợp lệ (Mục~2): trung bình $\bar{x}$, độ lệch chuẩn mẫu $s$ (mẫu số $n-1$), hệ số biến thiên $CV = s/\bar{x}\times 100\%$, trung vị và các phân vị (nội suy tuyến tính, \texttt{numpy.percentile}), độ lệch (hệ số bất đối xứng Fisher--Pearson hiệu chỉnh, \texttt{pandas.Series.skew}):
+\begin{equation}
+  g = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left(\frac{x_i - \bar{x}}{s}\right)^3 .
+\end{equation}
+Giờ (ngày) mưa là giờ (ngày) có lượng mưa $\geq 1$ mm; tần suất mưa là tỉ lệ số giờ (ngày) mưa trên tổng số giờ (ngày) có số liệu. Mùa mưa gồm các tháng IX--XII, mùa khô gồm các tháng I--VIII.
+
+% ---------------------------------------------------------------------
+\subsection{Lượng mưa giờ}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê mô tả lượng mưa giờ (trên các giờ có số liệu).}
+  \label{tab:gio}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5.2cm}|Y|Y|Y|}
+    \hline
+    \textbf{Thông số} & \textbf{Cả năm} & \textbf{Mùa mưa (IX--XII)} & \textbf{Mùa khô (I--VIII)} \\
+    \hline
+    \input{tables/gio}
+  \end{tabularx}
+\end{table}
+
+Theo Bảng~\ref{tab:gio}, trong 84\,429 giờ có số liệu chỉ có 7\,663 giờ mưa $\geq 1$ mm, tương ứng tần suất 9,1\%; trung vị và phân vị 75\% của mưa giờ đều xấp xỉ 0 mm. Lượng mưa giờ trung bình cả năm là 0,53 mm nhưng độ lệch chuẩn tới 2,74 mm (CV 518\%) và độ lệch 11,11, cho thấy phân bố lệch phải rất mạnh: phần lớn các giờ không mưa hoặc mưa nhỏ, xen kẽ một số ít giờ mưa cường độ rất lớn.
+
+Mùa mưa có tần suất giờ mưa 17,9\%, gần gấp 4 lần mùa khô (4,7\%), lượng mưa giờ trung bình 1,06 mm so với 0,26 mm. Tuy nhiên, \emph{khi đã mưa}, cường độ trung bình giữa hai mùa không chênh lệch nhiều (5,61 mm/giờ so với 5,03 mm/giờ). Như vậy, lượng mưa mùa mưa lớn chủ yếu do mưa xảy ra thường xuyên và kéo dài hơn, chứ không phải do cường độ từng giờ lớn hơn nhiều. Cả giai đoạn có 385 giờ mưa trên 20 mm và 26 giờ trên 50 mm, trong đó lần lượt 254 và 20 giờ thuộc mùa mưa.
+
+Lượng mưa giờ lớn nhất đạt 107,0 mm vào giờ thứ 17 ngày 31/03/2013, xảy ra trong mùa khô. Đây là một trận mưa dông cường độ rất lớn, vượt xa giờ mưa lớn thứ hai (80,1 mm lúc 12 giờ ngày 05/11/2017). Vì giá trị này đơn lẻ và xảy ra trái mùa, cần được đối chiếu thêm với số liệu trạm lân cận khi sử dụng cho mục đích thiết kế.
+
+\HinhAnh[\linewidth]{fig03_hourly_dist.png}{(a) Phân bố tần suất lượng mưa giờ mưa và (b) chu trình ngày của lượng mưa giờ trung bình theo mùa.}{fig:gio}
+
+Hình~\ref{fig:gio}a cho thấy số giờ mưa giảm gần như theo hàm mũ khi cường độ tăng (trục tung thang log). Hình~\ref{fig:gio}b thể hiện sự khác biệt rõ rệt về chu trình ngày giữa hai mùa. Trong mùa khô, mưa có tính đối lưu điển hình: lượng mưa giờ trung bình rất nhỏ vào buổi sáng (thấp nhất 0,08 mm lúc 12 giờ), tăng vọt vào buổi chiều và đạt cực đại 1,04 mm lúc 16 giờ. Trong mùa mưa, mưa phân bố tương đối đều trong cả ngày (0,81--1,61 mm), cực đại lúc 17 giờ, phản ánh vai trò của các hệ thống thời tiết quy mô lớn (không khí lạnh, dải hội tụ nhiệt đới, bão và áp thấp nhiệt đới) gây mưa liên tục nhiều giờ.
+
+% ---------------------------------------------------------------------
+\subsection{Lượng mưa ngày}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê mô tả lượng mưa ngày (trên các ngày hợp lệ).}
+  \label{tab:ngay}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5.2cm}|Y|Y|Y|}
+    \hline
+    \textbf{Thông số} & \textbf{Cả năm} & \textbf{Mùa mưa (IX--XII)} & \textbf{Mùa khô (I--VIII)} \\
+    \hline
+    \input{tables/ngay}
+  \end{tabularx}
+\end{table}
+
+Theo Bảng~\ref{tab:ngay}, trạm \TenTram{} có 3\,494 ngày hợp lệ, trong đó 1\,159 ngày thuộc mùa mưa và 2\,335 ngày thuộc mùa khô. Lượng mưa ngày trung bình cả năm là 12,39 mm, độ lệch chuẩn 34,45 mm (CV 277,9\%), trung vị chỉ 0,5 mm và độ lệch 8,22, tức phân bố lệch phải rõ rệt. Trung bình mùa mưa đạt 25,14 mm/ngày, gấp hơn 4 lần mùa khô (6,07 mm/ngày).
+
+Các phân vị cho thấy sự khác biệt lớn giữa hai mùa: P90, P95 và P99 của mùa mưa lần lượt là 67,0; 114,8 và 268,6 mm, so với 20,3; 34,6 và 64,1 mm của mùa khô. Lượng mưa ngày lớn nhất 781,6 mm xảy ra ngày 05/11/2017, trong khi ngày mưa lớn nhất mùa khô chỉ đạt 151,1 mm.
+
+Tần suất ngày mưa $\geq 1$ mm khá cao: 46,6\% số ngày trong năm (1\,628 ngày), lên tới 65,1\% trong mùa mưa (754 ngày) và 37,4\% trong mùa khô (874 ngày). Lượng mưa trung bình của riêng các ngày mưa là 26,51 mm (mùa mưa 38,59 mm, mùa khô 16,09 mm), trung vị ngày mưa là 12,4 mm.
+
+Về các sự kiện mưa lớn, cả giai đoạn có 210 ngày mưa trên 50 mm và 71 ngày mưa trên 100 mm, trong đó 66/71 ngày mưa trên 100 mm thuộc mùa mưa. Riêng các ngày mưa trên 100 mm (2\% số ngày hợp lệ) đã đóng góp tới 31,8\% tổng lượng mưa của cả giai đoạn. Năm ngày mưa lớn nhất lần lượt là 05/11/2017 (781,6 mm), 29/09/2009 (458,7 mm), 15/11/2013 (439,0 mm), 02/10/2013 (403,7 mm) và 25/11/2011 (378,2 mm), đều thuộc mùa mưa.
+
+\HinhAnh[\linewidth]{fig02_daily_dist.png}{(a) Phân bố tần suất lượng mưa ngày mưa và (b) đường tần suất tích lũy kèm các phân vị P90, P95, P99 của lượng mưa ngày.}{fig:ngay}
+
+Hình~\ref{fig:ngay}a cho thấy phân bố lượng mưa ngày có đuôi phải rất dài: phần lớn ngày mưa có lượng dưới 50 mm, số ngày giảm nhanh khi lượng mưa tăng, nhưng vẫn xuất hiện một số ngày trên 300--450 mm và đặc biệt ngày 781,6 mm tách biệt hẳn so với phần còn lại. Đường tần suất tích lũy (Hình~\ref{fig:ngay}b) cho thấy khoảng 42\% số ngày hợp lệ hoàn toàn không mưa và 90\% số ngày có lượng mưa không quá 34,4 mm.
+
+% ---------------------------------------------------------------------
+\subsection{Lượng mưa tháng}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê tổng lượng mưa theo tháng trong năm -- Trạm \TenTram{} (chỉ tính tháng hợp lệ).}
+  \label{tab:thang}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|c|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Tháng} & \textbf{Số tháng (n)} & \textbf{Trung bình (mm)} & \textbf{Độ lệch chuẩn (mm)} & \textbf{Nhỏ nhất (mm)} & \textbf{Trung vị (mm)} & \textbf{Lớn nhất (mm)} \\
+    \hline
+    \input{tables/thang}
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê chung của tổng lượng mưa tháng (mọi tháng hợp lệ).}
+  \label{tab:thang-chung}
+  \small
+  \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Thông số} & \textbf{Trạm \TenTram} \\
+    \hline
+    \input{tables/thang_chung}
+  \end{tabular}
+\end{table}
+
+Bảng~\ref{tab:thang} cho thấy chế độ mưa tại \TenTram{} có một mùa mưa rõ rệt vào cuối năm. Lượng mưa tăng mạnh từ tháng IX (614,7 mm), đạt cực đại vào tháng XI (1\,167,0 mm) và tháng X (779,0 mm), sau đó giảm ở tháng XII (470,2 mm). Bốn tháng mùa mưa chiếm khoảng 68\% tổng lượng mưa trung bình năm. Các tháng ít mưa nhất là tháng IV (93,1 mm) và tháng II (93,3 mm). Trong mùa khô vẫn xuất hiện hai đỉnh phụ vào tháng V (252,0 mm) và tháng VIII (245,6 mm), tương ứng với thời kỳ mưa đầu hạ (mưa tiểu mãn) và mưa dông mùa hè.
+
+Biến động giữa các năm khác nhau theo tháng. Tháng VIII có biến động nhỏ nhất (CV 39\%), trong khi tháng II (CV 106\%) và tháng XII (CV 102\%) biến động lớn nhất. Tháng XI không chỉ có lượng mưa trung bình lớn nhất mà còn có biên độ rất rộng, từ 248,3 mm đến 2\,345,1 mm (tháng 11/2017), lớn gần gấp đôi trung bình tháng XI. Theo Bảng~\ref{tab:thang-chung}, tổng lượng mưa tháng trung bình là 365,3 mm, trung vị 232,1 mm, CV 113,7\% và độ lệch 2,35, phản ánh phân bố lệch phải do các tháng mùa mưa có lượng mưa vượt trội.
+
+\HinhAnh[0.85\linewidth]{fig04_monthly_hist.png}{Phân bố tần suất tổng lượng mưa tháng tại trạm \TenTram{} (118 tháng hợp lệ).}{fig:thang-hist}
+
+\HinhAnh[0.9\linewidth]{fig05_monthly_box.png}{Biểu đồ hộp (boxplot) tổng lượng mưa theo tháng trong năm.}{fig:thang-box}
+
+Hình~\ref{fig:thang-hist} cho thấy 55\% số tháng có tổng lượng mưa dưới 250 mm, trong khi số ít tháng mùa mưa đạt trên 1\,000 mm tạo thành đuôi phân bố kéo dài. Biểu đồ hộp (Hình~\ref{fig:thang-box}) thể hiện rõ chu trình mùa: các tháng I--VIII có hộp thấp và hẹp, còn các tháng IX--XII (màu cam) có trung vị cao và độ phân tán lớn. Trong mùa mưa, hai giá trị ngoại lai là tháng IX/2009 (1\,495,2 mm) và tháng XII/2016 (1\,763,8 mm). Trong mùa khô, phần lớn giá trị ngoại lai thuộc năm 2017 (tháng II: 321,1 mm; tháng V: 516,2 mm; tháng VI: 371,9 mm; tháng VII: 431,9 mm), giải thích vì sao mùa khô năm 2017 đạt tới 2\,377,6 mm dù thiếu số liệu tháng I.
+
+% ---------------------------------------------------------------------
+\subsection{Lượng mưa năm và theo mùa}
+
+\begin{table}[H]
+  \centering
+  \caption{Tổng lượng mưa năm, mưa mùa mưa, mùa khô và số ngày mưa theo năm.}
+  \label{tab:nam}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|c|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Năm} & \textbf{Mưa năm (mm)} & \textbf{Mùa mưa IX--XII (mm)} & \textbf{Mùa khô I--VIII (mm)} & \textbf{Tỉ lệ mùa mưa (\%)} & \textbf{Số ngày mưa} \\
+    \hline
+    \input{tables/nam}
+  \end{tabularx}
+  \GhiChuBang{$^{*}$ Năm/mùa có tháng không hợp lệ (11/2009, 01/2017): giá trị thấp hơn thực tế, không đưa vào Bảng~\ref{tab:nam-thongke}.}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Thống kê lượng mưa năm và mưa theo mùa (năm hợp lệ).}
+  \label{tab:nam-thongke}
+  \footnotesize
+  \begin{tabularx}{\linewidth}{|l|Y|Y|Y|Y|Y|Y|Y|Y|}
+    \hline
+    \textbf{Chuỗi} & \textbf{n} & \textbf{TB} & \textbf{ĐLC} & \textbf{CV (\%)} & \textbf{Nhỏ nhất} & \textbf{Trung vị} & \textbf{Lớn nhất} & \textbf{Độ lệch} \\
+    \hline
+    \input{tables/nam_thongke}
+  \end{tabularx}
+\end{table}
+
+Lượng mưa năm trung bình tại trạm \TenTram{} (8 năm hợp lệ) là 4\,192,5 mm, dao động từ 2\,425,5 mm (năm 2012) đến 5\,567,9 mm (năm 2011), CV 23,3\%. Đây là mức mưa rất lớn, phù hợp với vị trí của \TenTram{} ở sườn đông dãy Trường Sơn, nơi địa hình chắn gió làm tăng cường mưa trong mùa gió mùa Đông Bắc. Năm 2017 dù thiếu phần lớn tháng I vẫn đạt 6\,017,1 mm, nên thực tế đây là năm mưa nhiều nhất giai đoạn; năm 2016 cũng đạt 5\,271,7 mm.
+
+Mùa mưa (IX--XII) đóng góp trung bình 68,0\% lượng mưa năm (dao động 50,2--76,1\%), với lượng mưa trung bình 2\,999,0 mm. Lượng mưa mùa mưa biến động mạnh giữa các năm (CV 31,3\%), từ 1\,217,4 mm (năm 2012) đến 4\,139,4 mm (năm 2011). Mùa khô tuy kéo dài 8 tháng nhưng chỉ đạt trung bình 1\,309,9 mm và ổn định hơn (CV 18,6\%). Năm 2012 là năm ít mưa nổi bật: mùa mưa chỉ bằng khoảng 40\% trung bình nhiều năm, làm tỉ lệ mùa mưa giảm xuống 50,2\%. Số ngày mưa $\geq 1$ mm trung bình 163,5 ngày/năm (145--194 ngày) và biến động nhỏ (CV 10,5\%), cho thấy chênh lệch lượng mưa giữa các năm chủ yếu do cường độ các đợt mưa lớn trong mùa mưa, chứ không phải do số ngày mưa.
+
+\HinhAnh[0.9\linewidth]{fig06_annual_season.png}{(a) Tổng lượng mưa năm phân theo mùa và (b) số ngày mưa $\geq 1$ mm theo năm tại trạm \TenTram{} (cột nhạt, gạch chéo: năm/mùa có tháng thiếu số liệu).}{fig:nam}
+
+Hình~\ref{fig:nam} cho thấy phần màu cam (mùa mưa) quyết định sự khác biệt giữa các năm: các năm nhiều mưa (2011, 2016, 2017) đều có mùa mưa trên 3\,600 mm, trong khi phần mùa khô dao động trong khoảng 1\,050--1\,800 mm ở các năm hợp lệ. Số ngày mưa (Hình~\ref{fig:nam}b) không biến đổi cùng chiều hoàn toàn với tổng lượng mưa; chẳng hạn năm 2008 có nhiều ngày mưa nhất (194 ngày) nhưng tổng lượng mưa (4\,457,1 mm) chỉ cao hơn trung bình không nhiều, còn năm 2011 ít ngày mưa hơn (179 ngày) nhưng mưa nhiều nhất trong các năm hợp lệ.

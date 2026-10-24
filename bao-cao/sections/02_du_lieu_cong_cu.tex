@@ -1,0 +1,45 @@
+% =====================================================================
+%  MỤC 1 — DỮ LIỆU VÀ CÔNG CỤ SỬ DỤNG
+% =====================================================================
+\section{Dữ liệu và công cụ sử dụng}
+
+\subsection{Dữ liệu}
+
+Dữ liệu sử dụng là chuỗi lượng mưa giờ tại trạm quan trắc \TenTram{} (tỉnh Quảng Nam), lưu ở định dạng CSV (\texttt{Hourly rain in Tra My.xlsx - TM\_1hr.csv}), gồm 87\,672 bản ghi giờ liên tục từ 01/01/2008 đến 31/12/2017 (3\,653 ngày, 24 bản ghi mỗi ngày). Mỗi bản ghi gồm các trường:
+
+\begin{itemize}[leftmargin=1.5cm]
+  \item \texttt{Ngay}: ngày quan trắc (định dạng tháng/ngày/năm);
+  \item \texttt{Gio}: giờ trong ngày, từ 1 đến 24; giá trị $h$ được hiểu là lượng mưa của giờ kết thúc lúc $h$ giờ, nên tổng 24 giờ của một ngày là lượng mưa của ngày đó;
+  \item \texttt{Luong mua (mm)}: lượng mưa trong giờ, độ phân giải 0,1 mm;
+  \item \texttt{Trượt lở}: cờ ghi nhận trượt lở đất (0 -- không; 1 -- có), dùng làm thông tin tham chiếu khi phân tích các đợt mưa cực trị.
+\end{itemize}
+
+Đề bài nêu số liệu của hai trạm trong giai đoạn 2011--2020; tuy nhiên tệp số liệu được cung cấp chỉ gồm \textbf{một trạm \TenTram} với thời đoạn \textbf{2008--2017} (vẫn đủ 10 năm). Toàn bộ phân tích dưới đây được thực hiện trên thời đoạn thực tế này. Từ chuỗi mưa giờ, các chuỗi mưa ngày, tháng, năm và theo mùa được tổng hợp bằng cách cộng dồn. Mùa mưa tại \TenTram{} là các tháng IX--XII (phù hợp với chế độ mưa của khu vực Trung Trung Bộ), mùa khô là các tháng I--VIII.
+
+\subsection{Công cụ sử dụng}
+
+Phân tích được thực hiện bằng ngôn ngữ Python 3.12 với các thư viện mã nguồn mở pandas \cite{pandas}, numpy, scipy \cite{scipy} và matplotlib. Kết quả được xây dựng thành website tra cứu trực quan \WebURL{} (Mục~\ref{sec:website}); toàn bộ mã nguồn phân tích, website và báo cáo được công bố tại \GitHubURL{} (Phụ lục). Bảng~\ref{tab:congcu} tóm tắt công cụ dùng cho từng nội dung.
+
+\begin{table}[H]
+  \centering
+  \caption{Công cụ và hàm sử dụng cho từng nội dung tính toán.}
+  \label{tab:congcu}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5.6cm}|>{\raggedright\arraybackslash}X|}
+    \hline
+    \textbf{Nội dung} & \textbf{Thư viện / hàm} \\
+    \hline
+    Đọc dữ liệu, kiểm tra thiếu, trùng lặp & \texttt{pandas.read\_csv}, \texttt{isna}, \texttt{duplicated} \\ \hline
+    Tổng hợp mưa ngày, tháng, năm, mùa & \texttt{pandas.groupby(...).sum()} \\ \hline
+    Thống kê mô tả (TB, ĐLC, CV, phân vị, độ lệch) & \texttt{pandas.Series.mean/std/skew}, \texttt{numpy.percentile} \\ \hline
+    Rx1day, Rx5day, Rx1hour & \texttt{pandas.Series.rolling(5).sum()}, \texttt{idxmax} \\ \hline
+    Ngưỡng R95p, R99p & \texttt{numpy.percentile} (nội suy tuyến tính) \\ \hline
+    Khớp phân bố xác suất (MLE) & \texttt{scipy.stats.gumbel\_r}, \texttt{genextreme}, \texttt{lognorm}, \texttt{gamma}, \texttt{weibull\_min} (\texttt{.fit}) \\ \hline
+    Kiểm định phù hợp & \texttt{scipy.stats.kstest}, \texttt{cramervonmises}; Anderson--Darling tự lập trình \\ \hline
+    Phương pháp vượt ngưỡng (POT) & \texttt{scipy.stats.genpareto} \\ \hline
+    Khoảng tin cậy & Bootstrap (\texttt{numpy.random}), 2\,000 lần lặp \\ \hline
+    Biểu đồ trong báo cáo & \texttt{matplotlib} \\ \hline
+    Website trực quan & HTML, CSS, JavaScript; Apache ECharts (biểu đồ tương tác), Leaflet (bản đồ) \\ \hline
+    Lưu trữ và triển khai & GitHub (mã nguồn), GitHub Actions (kiểm tra dữ liệu), GitHub Pages (phát hành website) \\ \hline
+  \end{tabularx}
+\end{table}

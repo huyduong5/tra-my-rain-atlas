@@ -23,6 +23,8 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 # ---------------------------------------------------------------------------
 ROOT = Path(__file__).resolve().parent
 CSV_PATH = ROOT / "Hourly rain in Tra My.xlsx - TM_1hr.csv"
+if not CSV_PATH.exists():  # bố cục repo tra-my-rain-atlas: số liệu gốc nằm ở data/raw/
+    CSV_PATH = ROOT.parent / "data" / "raw" / "Hourly_rain_Tra_My_2008_2017.csv"
 OUT = ROOT / "outputs"
 FIG = OUT / "figures"
 CACHE = OUT / "cache"

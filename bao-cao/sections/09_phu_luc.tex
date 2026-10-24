@@ -1,0 +1,55 @@
+% =====================================================================
+%  PHỤ LỤC — MÃ NGUỒN VÀ WEBSITE TRA CỨU
+%  Liên kết sửa tại config/thong_tin.tex (\LinkWeb, \LinkGitHub)
+% =====================================================================
+\section*{Phụ lục. Mã nguồn và website tra cứu}
+\addcontentsline{toc}{section}{Phụ lục. Mã nguồn và website tra cứu}
+
+Toàn bộ mã nguồn phân tích, website và mã LaTeX của báo cáo này được công bố công khai trên GitHub. Quét mã QR bằng điện thoại hoặc bấm vào đường link để truy cập.
+
+\begin{center}
+  \begin{minipage}[t]{0.45\linewidth}
+    \centering
+    \QRLink{3.2cm}{\LinkWeb}\par\medskip
+    \textbf{Website tra cứu}\par
+    {\small\WebURL}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.45\linewidth}
+    \centering
+    \QRLink{3.2cm}{\LinkGitHub}\par\medskip
+    \textbf{Mã nguồn trên GitHub}\par
+    {\small\GitHubURL}
+  \end{minipage}
+\end{center}
+
+\subsection*{Cấu trúc kho mã nguồn}
+
+\begin{table}[H]
+  \centering
+  \caption{Cấu trúc kho mã nguồn \texttt{tra-my-rain-atlas}.}
+  \label{tab:repo}
+  \small
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{5cm}|L|}
+    \hline
+    \textbf{Thư mục / tệp} & \textbf{Nội dung} \\
+    \hline
+    \texttt{analysis/analyze\_tra\_my.py} & Đọc số liệu, kiểm tra chất lượng, tổng hợp mưa ngày, tháng, năm, mùa \\ \hline
+    \texttt{analysis/report\_analysis.py} & Tính toàn bộ kết quả, sinh bảng và hình của báo cáo (Mục 2--5) \\ \hline
+    \texttt{scripts/build\_data.py} & Xuất dữ liệu JSON, CSV cho website từ cùng các hàm phân tích \\ \hline
+    \texttt{scripts/validate\_data.py} & Kiểm tra dữ liệu website khớp với báo cáo (chạy tự động khi triển khai) \\ \hline
+    \texttt{data/} & Số liệu gốc (\texttt{raw/}), mưa giờ theo năm (\texttt{hourly/}), bảng CSV tải về (\texttt{csv/}), kết quả JSON \\ \hline
+    \texttt{index.html}, \texttt{assets/} & Giao diện website: 9 trang, biểu đồ, bản đồ \\ \hline
+    \texttt{bao-cao/} & Mã LaTeX của báo cáo này (biên dịch bằng XeLaTeX) \\ \hline
+    \texttt{.github/workflows/} & Quy trình GitHub Actions: kiểm tra dữ liệu và phát hành lên GitHub Pages \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection*{Tái lập kết quả}
+
+\begin{enumerate}[label=\arabic*., leftmargin=1.2cm]
+  \item Tải mã nguồn: \texttt{git clone \LinkGitHub}
+  \item Cài Python 3.12 và các thư viện: \texttt{pip install pandas numpy scipy matplotlib}
+  \item Tính lại bảng và hình của báo cáo: \texttt{python3 analysis/report\_analysis.py}
+  \item Tính lại dữ liệu website và kiểm tra: \texttt{python3 scripts/build\_data.py} rồi \texttt{python3 scripts/validate\_data.py}
+  \item Xem website trên máy: \texttt{python3 -m http.server 8000}, mở địa chỉ \texttt{http://localhost:8000}
+\end{enumerate}

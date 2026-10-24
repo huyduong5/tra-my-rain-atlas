@@ -1,0 +1,53 @@
+% =====================================================================
+%  BÁO CÁO: PHÂN TÍCH DỮ LIỆU MƯA GIỜ TRẠM TRÀ MY 2008–2017
+%  Định dạng theo file mẫu "Tham khao mau bao cao bai tap 1.pdf"
+%  Biên dịch: XeLaTeX (file latexmkrc đã cấu hình sẵn cho Overleaf)
+%
+%  Cách dùng trên Overleaf:
+%    New Project > Upload Project > chọn bao_cao_latex.zip
+%  Sửa thông tin bìa : config/thong_tin.tex
+%  Logo trường       : figures/logo_dhkhtn.jpg
+% =====================================================================
+\documentclass[a4paper, fontsize=13pt, parskip=false]{scrartcl}
+
+\input{config/preamble}
+\input{config/thong_tin}
+
+\begin{document}
+
+% ---------- Bìa (không đánh số trang) ----------
+\input{sections/00_bia}
+
+% ---------- Đề bài + Mục lục (số La Mã) ----------
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{sections/01_de_bai}
+\clearpage
+
+\begin{center}
+  \textbf{MỤC LỤC}
+\end{center}
+\makeatletter
+\@starttoc{toc}
+\makeatother
+\clearpage
+
+% ---------- Nội dung chính (số Ả Rập), các mục chạy liền như mẫu ----------
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{sections/02_du_lieu_cong_cu}
+\input{sections/03_kiem_tra_xu_ly}
+\input{sections/04_thong_ke_mo_ta}
+\input{sections/05_cuc_tri_va_nguong}
+\input{sections/06_chu_ky_lap_lai}
+\input{sections/065_website}
+\input{sections/07_ket_luan}
+
+\clearpage
+\input{sections/08_tai_lieu_tham_khao}
+
+\clearpage
+\input{sections/09_phu_luc}
+
+\end{document}
